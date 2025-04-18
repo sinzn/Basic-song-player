@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Music Player</title>
+</head>
+<body>
+  <div align="center" style="margin-top: 20%;">
+    <h2>Music Player</h2>
+
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+
+    <div>
+      <button onclick="prevSong()">Previous</button>
+      <button onclick="togglePlay()">Play/Pause</button>
+      <button onclick="nextSong()">Next</button>
+    </div>
+
+    <p id="nowPlaying">Now Playing: songs/song1.mp3</p>
+  </div>
+
+  <script>
+    const songs = ["song1.mp3", "song2.mp3", "song3.mp3"];
+    const songFolder = "songs/";
+    let currentSongIndex = 0;
+
+    const audio = document.getElementById("audioPlayer");
+    const nowPlaying = document.getElementById("nowPlaying");
+
+    function loadSong(index) {
+      const songPath = songFolder + songs[index];
+      audio.src = songPath;
+      nowPlaying.textContent = "Now Playing: " + songPath;
+      audio.play();
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    function prevSong() {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      loadSong(currentSongIndex);
+    }
+
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      loadSong(currentSongIndex);
+    }
+
+    audio.addEventListener("ended", nextSong);
+
+    window.onload = () => {
+      loadSong(currentSongIndex);
+    };
+  </script>
+   <footer
+   style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); padding: 8px 16px; font-family: Arial, sans-serif; font-size: 14px; z-index: 1000;">
+   Created by <a href="http://www.sinzn.fun/" style="text-decoration: none; color: #0366d6;"> Shivam Singh </a> |
+   Source available on
+   <a href="https://github.com/sinzn" target="_blank" style="text-decoration: none; color: #0366d6;">GitHub</a>.
+</footer>
+</body>
+</html>
